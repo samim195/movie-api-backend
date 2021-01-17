@@ -69,12 +69,11 @@ app.post('/addfavourites', function(req, res) {
         console.log(dbResult)
         if (err) {
             console.log(err)
-        } else if (dbResult.name) {
+        } else if (dbResult) {
             // console.log(dbResult.name)
             // console.log(movieName)
             console.log("Record already exists in the database");
-        }
-        else {
+        } else if (!dbResult) {
             newMovie.save(function(err, newMovie) {
                 if(err)  console.error(err);
                 console.log("Successfully Saved The Record To The Database")
