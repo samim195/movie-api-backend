@@ -1,0 +1,39 @@
+services:
+  web:
+    build: .
+    networks:
+    - serverside
+    ports:
+     - "80:3001"
+    stdin_open: true
+    tty: true
+    env_file: .env
+    environment: 
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_HOSTNAME=$MONGO_HOSTNAME
+      - MONGO_PORT=$MONGO_PORT
+      - MONGO_DB=$MONGO_DB
+  
+  db:
+    image: mongo:4.1.8-xenial
+    networks: 
+    - serverside
+    container_name: db
+    restart: unless-stopped
+    env_file: .env
+    ports: 
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    volumes:
+      - dbdata:/data/db
+
+volumes:
+  dbdata:
+  node_modules:
+
+networks:
+  serverside:
+    driver: bridge
