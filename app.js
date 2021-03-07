@@ -9,15 +9,15 @@ app.use(express.urlencoded({ extended: false}));
 
 app.use(cors());
 
-const {
-  MONGO_USERNAME,
-  MONGO_PASSWORD,
-  MONGO_HOSTNAME,
-  MONGO_PORT,
-  MONGO_DB
-  } = process.env;
+// const {
+//   MONGO_USERNAME,
+//   MONGO_PASSWORD,
+//   MONGO_HOSTNAME,
+//   MONGO_PORT,
+//   MONGO_DB
+//   } = process.env;
 
-mongoose.connect(`mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}`, { useUnifiedTopology: true, useNewUrlParser: true});
+mongoose.connect(`mongodb://mongo:27017/moviedb`, { useUnifiedTopology: true, useNewUrlParser: true}) ;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', function() {
@@ -93,6 +93,6 @@ app.post('/addfavourites', function(req, res) {
   });
   
 
-app.listen('80', function() {
-    console.log("app started on port 80");
+app.listen('3000', function() {
+    console.log("app started on port 3000");
 });
